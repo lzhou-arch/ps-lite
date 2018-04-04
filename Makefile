@@ -18,7 +18,15 @@ PROTOC = ${DEPS_PATH}/bin/protoc
 endif
 
 INCPATH = -I./src -I./include -I$(DEPS_PATH)/include
-CFLAGS = -std=c++11 -msse2 -fPIC -O3 -ggdb -Wall -finline-functions $(INCPATH) $(ADD_CFLAGS)
+CFLAGS = -std=c++11 -fPIC -O3 -ggdb -Wall -finline-functions $(INCPATH) $(ADD_CFLAGS)
+
+ifndef USE_SSE
+	USE_SSE = 1
+endif
+
+ifeq ($(USE_SSE), 1)
+	CFLAGS += -msse2
+endif
 
 all: ps test
 
